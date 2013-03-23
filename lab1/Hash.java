@@ -138,7 +138,7 @@ public class Hash {
         return (float)hashMap.size() / hashMapSize;
     }
 
-    /** Среднее кол-во проб */
+    /** Среднее число проб */
     public float sr_prob() {
         int sum = 0;
         //Считаем сумму всех проб
@@ -155,8 +155,8 @@ public class Hash {
         //Массив для проверки
         List<Integer> array = Arrays.asList(69,85,73,54,12,23,47);
 
-        //Создаем класс Hash: 47 - кол-во элементов, false - выкл-е отладки, null - массив пустой
-        Hash hash = new Hash(47, false, null);
+        //Создаем класс Hash: 45 - кол-во элементов, false - выкл-е отладки, null - массив пустой
+        Hash hash = new Hash(45, false, null);
         //Запускаем  рандомную генерацию массива
         hash.generateRandomArray();
         //Строим Хеш-таблицу
