@@ -49,7 +49,7 @@ class Tree
       node.right = add_r(el, node.right)
     end
 
-    node # TODO Проверить в Java
+    node # TODO Проверить в Java (если убрать, дерево будет состоять только из конечных листьев)
   end
 
   # Рекурсивный вывод элементов в Поисковом дереве
@@ -79,5 +79,5 @@ class Tree
 end
 
 array = [8, 91, 113, 22, 125, 128, 45, 55, 50, 61, 58]
-tree = Tree.new(29, array, true)
+tree = Tree.new(29, array, false)
 tree.print
