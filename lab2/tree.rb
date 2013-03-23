@@ -37,15 +37,15 @@ class Tree
 
   # Рандомная генерация массива
   def generate_random_array(num)
-	@array = [] if @array.nil?
-    if @array.size == 0
-      num.times {
-        @array << get_rand_uniq
-      }
-    end
+    @array = [] if @array.nil?
+      if @array.size == 0
+        num.times {
+          @array << get_rand_uniq
+        }
+      end
 
-    print_random_array
-	@array
+      print_random_array
+    @array
   end
 
   # Добавление элемента в Поисковое дерево
@@ -57,28 +57,28 @@ class Tree
   def print_tree
     puts '>> Print Tree'
     print_r(@root)
-	puts
+	  puts
   end
   
   # Вывод Дерева Графически
   def print_graph_tree
-	puts '>> Print Graph Tree'
-	@count = 0
-	@count_l = 0
-	@count_r = 0
-	@height = 0
-	@count_down = 0
-  @a = []
-	
-	height_ideal_r(@root)
-	calcs_graph(@root)
-  (@height+1).times { |num|
-    @a[num] = ''
-  }
-	
-	puts "height: #{@height}; count_down: #{@count_down}; count: #{@count}; count_l: #{@count_l}; count_r: #{@count_r}"
-	
-	generate_graph_tree_r(@root, 1)
+    puts '>> Print Graph Tree'
+    @count = 0
+    @count_l = 0
+    @count_r = 0
+    @height = 0
+    @count_down = 0
+    @a = []
+
+    height_ideal_r(@root)
+    calcs_graph(@root)
+    (@height+1).times { |num|
+      @a[num] = ''
+    }
+
+    puts "height: #{@height}; count_down: #{@count_down}; count: #{@count}; count_l: #{@count_l}; count_r: #{@count_r}"
+
+    generate_graph_tree_r(@root, 1)
     puts @a
   end
   
@@ -118,31 +118,31 @@ class Tree
   
   # Вывод Дерева Графически Рукурсионно
   def calcs_graph(node)	
-	if node		
-		@count += 1
-		@count_l += 1 if node.left
-		@count_r += 1 if node.right
-		calcs_graph(node.left)
-		calcs_graph(node.right)		
-		unless node.left || node.right
-			@count_down += 1
-		end		
-	end
+    if node
+      @count += 1
+      @count_l += 1 if node.left
+      @count_r += 1 if node.right
+      calcs_graph(node.left)
+      calcs_graph(node.right)
+      unless node.left || node.right
+        @count_down += 1
+      end
+    end
   end
   
   # Высота Идеал дерева
   def height_ideal_r(node)
-	if node
-		@height += 1
-		height_ideal_r(node.left)
-	end
+    if node
+      @height += 1
+      height_ideal_r(node.left)
+    end
   end
   
   # Вывод дерева в обратном порядке
   def print_back
-	puts '>> Print Back Tree'
-    print_back_r(@root)
-	puts "\n\n"
+    puts '>> Print Back Tree'
+      print_back_r(@root)
+    puts "\n\n"
   end
 
   private
