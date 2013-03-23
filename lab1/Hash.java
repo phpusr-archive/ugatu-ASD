@@ -9,24 +9,25 @@
 import java.util.*;
 
 /**
- * 15 вариант
- * Построить хеш - таблицу, содержащую последовательность из m=45 элементов размерности n=2. Элементы генерируются с помощью датчика случ. чисел.
- * Хеш - функция - первая цифра квадрата ключа.
- * Метод разрешения конфликта - квадратичные пробы.
+ * <b>15 вариант</b><br/>
+ * Построить хеш - таблицу, содержащую последовательность из m=45 элементов размерности n=2.<br/>
+ * Элементы генерируются с помощью датчика случ. чисел.<br/>
+ * Хеш - функция - первая цифра квадрата ключа.<br/>
+ * Метод разрешения конфликта - квадратичные пробы.<br/>
  */
 public class Hash {
     /** TODO */
     private int num;
-    private boolean showHashEl;
+    private boolean debug;
     private List<Integer> array;
     private int hashMapSize;
     private Map<Integer, Integer> hashMap;
     private List<Integer> probArray;
 
     /** Конструктор */
-    public Hash(int num, boolean showHashEl, List<Integer> array) {
+    public Hash(int num, boolean debug, List<Integer> array) {
         this.num = num;
-        this.showHashEl = showHashEl;
+        this.debug = debug;
         this.array = array != null ? array : new ArrayList<Integer>();
     }
 
@@ -66,7 +67,7 @@ public class Hash {
         hashMap = new HashMap<Integer, Integer>();
         probArray = new ArrayList<Integer>();
 
-        if (showHashEl) System.out.println("\nHash elements:");
+        if (debug) System.out.println("\nHash elements:");
         for (Integer el : array) {
             probArray.add(putEl(el, 0));
         }
@@ -79,9 +80,10 @@ public class Hash {
         int index;
         if (value == 0) {
             index = hash(el) % hashMapSize;
-            if (showHashEl) System.out.println(el + "->" + index);
+            if (debug) System.out.println(el + "->" + index);
         } else {
             index = (hash(el) + value*value) % hashMapSize;
+            if (debug) System.out.println("  value: " + value + "; index: " + index);
         }
 
         if (hashMap.get(index) == null) {
@@ -128,7 +130,7 @@ public class Hash {
 
     /** Главная функция */
     public static void main(String[] args) {
-        List<Integer> array = Arrays.asList(79,58,93,48,21);
+        List<Integer> array = Arrays.asList(69,85,73,54,12,23,47); //Для отладки
         Hash hash = new Hash(47, false, null);
         hash.generateRandomArray();
         hash.buildHashTable();
