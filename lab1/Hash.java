@@ -43,7 +43,7 @@ public class Hash {
 
     /** Возвращает рандомное уникальное значение, размерности = 2 */
     private int getRandUniq() {
-        int value = Math.round((float)Math.random()*90) + 10;
+        int value = Math.round((float)Math.random()*89) + 10;
         if (array.contains(value)) {
             return getRandUniq();
         } else {
@@ -66,7 +66,7 @@ public class Hash {
         hashMap = new HashMap<Integer, Integer>();
         probArray = new ArrayList<Integer>();
 
-        if (showHashEl) System.out.println("Hash elements:");
+        if (showHashEl) System.out.println("\nHash elements:");
         for (Integer el : array) {
             probArray.add(putEl(el, 0));
         }
@@ -81,7 +81,7 @@ public class Hash {
             index = hash(el) % hashMapSize;
             if (showHashEl) System.out.println(el + "->" + index);
         } else {
-            index = (hash(el) + value) % hashMapSize;
+            index = (hash(el) + value*value) % hashMapSize;
         }
 
         if (hashMap.get(index) == null) {
