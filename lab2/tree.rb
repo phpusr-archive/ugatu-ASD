@@ -89,9 +89,7 @@ class Tree
   # Рандомная генерация массива
   def generate_random_array(num, array)
     if array.size == 0
-      num.times {
-        array << get_rand_uniq(array)
-      }
+      num.times { array << get_rand_uniq(array) }
     end
 
     print_random_array(array)
@@ -199,13 +197,13 @@ class Tree
   def print_indent(lvl, right)
     count = 2**(@height-lvl)-1
     count += 1 if right
-    count.times{@graph[lvl-1] << @indent}
+    count.times{ @graph[lvl-1] << @indent }
   end
 
 end
 
 array = [29, 8, 91, 113, 22, 125, 128, 45, 55, 50, 61, 58]
-tree = Tree.new(array, false, '...', 'xxx')
+tree = Tree.new(array, true, '...', 'xxx')
 #tree.print_tree
 tree.print_back
 tree.print_graphical_tree
