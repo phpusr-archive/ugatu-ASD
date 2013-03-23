@@ -12,7 +12,7 @@ class Node
 end
 
 # Дерево
-class Tree
+class TreeExm
 
   # Конструктор
   def initialize(root, list, ideal)
@@ -79,5 +79,5 @@ class Tree
 end
 
 array = [8, 91, 113, 22, 125, 128, 45, 55, 50, 61, 58]
-tree = Tree.new(29, array, false)
+tree = TreeExm.new(29, array, false)
 tree.print
