@@ -108,14 +108,32 @@ public class Hash {
             if ((index+1) % 5 == 0) System.out.println();
         }
 
-        System.out.println();
+        System.out.println("\n");
+    }
+
+    /** Коеф. заполнения */
+    public float k_zap() {
+        return (float)hashMap.size() / hashMapSize;
+    }
+
+    /** Среднее кол-во проб */
+    public float sr_prob() {
+        int sum = 0;
+        for (Integer el : probArray) {
+            sum += el;
+        }
+
+        return (float)sum / array.size();
     }
 
     /** Главная функция */
     public static void main(String[] args) {
         List<Integer> array = Arrays.asList(79,58,93,48,21);
-        Hash hash = new Hash(47, true, null);
+        Hash hash = new Hash(47, false, null);
         hash.generateRandomArray();
         hash.buildHashTable();
+
+        System.out.println("  k zap: " + hash.k_zap());
+        System.out.println("sr prob: " + hash.sr_prob());
     }
 }
