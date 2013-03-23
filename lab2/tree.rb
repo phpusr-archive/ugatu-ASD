@@ -11,6 +11,14 @@ class Node
   end
 end
 
+=begin
+Сгенерировать 25 3-х значных неповторяющихся элементов
+Вывести их на экран
+Пердставить в виде идельно-сбалансированного дерева
+Вывести элементы дерева в обратном порядке
+=end
+
+
 # Дерево
 class Tree
 
@@ -60,31 +68,52 @@ class Tree
 	@count_r = 0
 	@height = 0
 	@count_down = 0
+  @a = []
 	
 	height_ideal_r(@root)
 	calcs_graph(@root)
+  (@height+1).times { |num|
+    @a[num] = ''
+  }
 	
 	puts "height: #{@height}; count_down: #{@count_down}; count: #{@count}; count_l: #{@count_l}; count_r: #{@count_r}"
 	
-	print_graph_tree_r(@root, 1)
+	generate_graph_tree_r(@root, 1)
+    puts @a
   end
   
-  # TODO
-  def print_graph_tree_r(node, lvl)
-	if lvl == 1
-		(@count_down/2+2-lvl).times{print '--'}
-		puts node.data
-		lvl += 1
-	end
-	if node
-		(@count_down/2+2-lvl).times{print '--'}
-		print "#{node.left.data}--" if node.left
-		print node.right.data if node.right
-		puts
-		print_graph_tree_r(node.left, lvl+1)
-		print_graph_tree_r(node.right, lvl+1)
-		# TODO HERE!!!
-	end	
+  # Генерация Графического представления Дерева
+  def generate_graph_tree_r(node, lvl)
+    if lvl == 1
+      generate_graph_node(node, lvl)
+    elsif node
+      generate_graph_node(node.left, lvl)
+      generate_graph_node(node.right, lvl)
+    end
+  end
+
+  # Генерация графического представления для ветки
+  def generate_graph_node(node, lvl)
+    return if lvl > @height
+
+    empty = 'xxx'
+    print_indent(lvl, false)
+    if node
+      @a[lvl] << node.data.to_s
+    else
+      @a[lvl] << empty
+    end
+    print_indent(lvl, true)
+
+    generate_graph_tree_r(node, lvl+1)
+  end
+
+  # Вывод Отступа справа и слева
+  def print_indent(lvl, right)
+    return if lvl > @height
+    count = 2**(@height-lvl)-1
+    count += 1 if right
+    count.times{@a[lvl] << '---'}
   end
   
   # Вывод Дерева Графически Рукурсионно
