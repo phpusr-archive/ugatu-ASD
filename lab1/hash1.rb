@@ -1,4 +1,4 @@
-class HashVar2
+class HashVar3
 
   # Конструктор
   def initialize(num, show_hash_el, array)
@@ -109,7 +109,7 @@ class HashVar2
 end
 
 array = [79,58,93,48,21]
-hash_var2 = HashVar2.new(47, false, nil)
+hash_var2 = HashVar3.new(47, false, nil)
 hash_var2.generate_random_array
 hash_var2.build_hash_table
 puts "  k zap: #{hash_var2.k_zap}"
