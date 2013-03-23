@@ -63,15 +63,12 @@ class Tree
   # Вывод Дерева Графически
   def print_graph_tree
     puts '>> Print Graph Tree'
-    @height = 0
+    @height = get_height
     @graph = []
 
-    height_ideal_r(@root)
-    (@height).times { |num|
-      @graph[num] = ''
-    }
+    (@height).times { |num| @graph[num] = '' }
 
-    puts "height: #{@height};"
+    puts "Height: #{@height}"
 
     generate_graph_tree_r(@root, 1)
     puts @graph
@@ -81,16 +78,16 @@ class Tree
   def generate_graph_tree_r(node, lvl)
     if lvl == 1
       generate_graph_node(node, lvl)
-    elsif node
-      generate_graph_node(node.left, lvl)
-      generate_graph_node(node.right, lvl)
+    elsif lvl <= @height
+      tmp = !node.nil? ? node.left : nil
+      generate_graph_node(tmp, lvl)
+      tmp = !node.nil? ? node.right : nil
+      generate_graph_node(tmp, lvl)
     end
   end
 
   # Генерация графического представления для ветки
   def generate_graph_node(node, lvl)
-    return if lvl > @height
-
     empty = 'xxx'
     print_indent(lvl, false)
     if node
@@ -112,11 +109,21 @@ class Tree
     count.times{@graph[lvl-1] << '---'}
   end
 
-  # Высота Идеал дерева
-  def height_ideal_r(node)
+  # Высота Дерева
+  def get_height
+    heights = []
+    get_height_r(@root, 1, heights)
+
+    heights.max-1
+  end
+
+  # Высота Дерева рекурсивно
+  def get_height_r(node, lvl, heights)
     if node
-      @height += 1
-      height_ideal_r(node.left)
+      get_height_r(node.left, lvl+1, heights)
+      get_height_r(node.right, lvl+1, heights)
+    else
+      heights << lvl
     end
   end
   
@@ -193,7 +200,7 @@ class Tree
 end
 
 array = [8, 91, 113, 22, 125, 128, 45, 55, 50, 61, 58]
-tree = Tree.new(29, array, true)
+tree = Tree.new(29, array, false)
 tree.print_tree
 tree.print_back
 tree.print_graph_tree
