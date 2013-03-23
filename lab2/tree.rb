@@ -25,9 +25,9 @@ class Tree
   # Конструктор
   def initialize(root, list, ideal)
     @root = Node.new(root)
+    list = generate_random_array(list, []) unless list.kind_of?(Array)
     if ideal
       puts '>> Build Ideal Tree'
-	  list = generate_random_array(25) if list.nil? #TODO
       @root = build_ideal_r(list, @root, list.size+1)
     else
       puts '>> Build Search Tree'
@@ -36,16 +36,15 @@ class Tree
   end
 
   # Рандомная генерация массива
-  def generate_random_array(num)
-    @array = [] if @array.nil?
-      if @array.size == 0
-        num.times {
-          @array << get_rand_uniq
-        }
-      end
+  def generate_random_array(num, array)
+    if array.size == 0
+      num.times {
+        array << get_rand_uniq(array)
+      }
+    end
 
-      print_random_array
-    @array
+    print_random_array(array)
+    array
   end
 
   # Добавление элемента в Поисковое дерево
@@ -73,32 +72,6 @@ class Tree
     generate_graph_tree_r(@root, 1)
     puts @graph
   end
-  
-  # Генерация Графического представления Дерева Рекурсивно
-  def generate_graph_tree_r(node, lvl)
-    if lvl == 1
-      generate_graph_node(node, lvl)
-    elsif lvl <= @height
-      tmp = !node.nil? ? node.left : nil
-      generate_graph_node(tmp, lvl)
-      tmp = !node.nil? ? node.right : nil
-      generate_graph_node(tmp, lvl)
-    end
-  end
-
-  # Генерация графического представления для ветки
-  def generate_graph_node(node, lvl)
-    empty = 'xxx'
-    print_indent(lvl, false)
-    if node
-      @graph[lvl-1] << node.data.to_s
-    else
-      @graph[lvl-1] << empty
-    end
-    print_indent(lvl, true)
-
-    generate_graph_tree_r(node, lvl+1)
-  end
 
   # Вывод Отступа справа и слева
   def print_indent(lvl, right)
@@ -117,16 +90,6 @@ class Tree
     heights.max-1
   end
 
-  # Высота Дерева рекурсивно
-  def get_height_r(node, lvl, heights)
-    if node
-      get_height_r(node.left, lvl+1, heights)
-      get_height_r(node.right, lvl+1, heights)
-    else
-      heights << lvl
-    end
-  end
-  
   # Вывод дерева в обратном порядке
   def print_back
     puts '>> Print Back Tree'
@@ -137,19 +100,19 @@ class Tree
   private
 
   # Возвращает рандомное уникальное значение
-  def get_rand_uniq
+  def get_rand_uniq(array)
     value = (rand(900)+100)
-    if  @array.find {|el| el == value} == nil
+    if  array.find {|el| el == value} == nil
       value
     else
-      get_rand_uniq
+      get_rand_uniq(array)
     end
   end
 
   # Вывод рандомного массива
-  def print_random_array
-    puts "Random array (size: #{@array.size}):"
-    puts @array.join(', ')
+  def print_random_array(array)
+    puts "Random array (size: #{array.size}):"
+    puts array.join(', ')
     puts
   end
 
@@ -197,10 +160,46 @@ class Tree
     end
   end
 
+  # Высота Дерева рекурсивно
+  def get_height_r(node, lvl, heights)
+    if node
+      get_height_r(node.left, lvl+1, heights)
+      get_height_r(node.right, lvl+1, heights)
+    else
+      heights << lvl
+    end
+  end
+
+  # Генерация Графического представления Дерева Рекурсивно
+  def generate_graph_tree_r(node, lvl)
+    if lvl == 1
+      generate_graph_node(node, lvl)
+    elsif lvl <= @height
+      tmp = !node.nil? ? node.left : nil
+      generate_graph_node(tmp, lvl)
+      tmp = !node.nil? ? node.right : nil
+      generate_graph_node(tmp, lvl)
+    end
+  end
+
+  # Генерация графического представления для ветки
+  def generate_graph_node(node, lvl)
+    empty = 'xxx'
+    print_indent(lvl, false)
+    if node
+      @graph[lvl-1] << node.data.to_s
+    else
+      @graph[lvl-1] << empty
+    end
+    print_indent(lvl, true)
+
+    generate_graph_tree_r(node, lvl+1)
+  end
+
 end
 
 array = [8, 91, 113, 22, 125, 128, 45, 55, 50, 61, 58]
-tree = Tree.new(29, array, false)
+tree = Tree.new(29, 5, true)
 tree.print_tree
 tree.print_back
 tree.print_graph_tree
