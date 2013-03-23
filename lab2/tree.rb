@@ -63,26 +63,21 @@ class Tree
   # Вывод Дерева Графически
   def print_graph_tree
     puts '>> Print Graph Tree'
-    @count = 0
-    @count_l = 0
-    @count_r = 0
     @height = 0
-    @count_down = 0
-    @a = []
+    @graph = []
 
     height_ideal_r(@root)
-    calcs_graph(@root)
-    (@height+1).times { |num|
-      @a[num] = ''
+    (@height).times { |num|
+      @graph[num] = ''
     }
 
-    puts "height: #{@height}; count_down: #{@count_down}; count: #{@count}; count_l: #{@count_l}; count_r: #{@count_r}"
+    puts "height: #{@height};"
 
     generate_graph_tree_r(@root, 1)
-    puts @a
+    puts @graph
   end
   
-  # Генерация Графического представления Дерева
+  # Генерация Графического представления Дерева Рекурсивно
   def generate_graph_tree_r(node, lvl)
     if lvl == 1
       generate_graph_node(node, lvl)
@@ -99,9 +94,9 @@ class Tree
     empty = 'xxx'
     print_indent(lvl, false)
     if node
-      @a[lvl] << node.data.to_s
+      @graph[lvl-1] << node.data.to_s
     else
-      @a[lvl] << empty
+      @graph[lvl-1] << empty
     end
     print_indent(lvl, true)
 
@@ -111,25 +106,12 @@ class Tree
   # Вывод Отступа справа и слева
   def print_indent(lvl, right)
     return if lvl > @height
+
     count = 2**(@height-lvl)-1
     count += 1 if right
-    count.times{@a[lvl] << '---'}
+    count.times{@graph[lvl-1] << '---'}
   end
-  
-  # Вывод Дерева Графически Рукурсионно
-  def calcs_graph(node)	
-    if node
-      @count += 1
-      @count_l += 1 if node.left
-      @count_r += 1 if node.right
-      calcs_graph(node.left)
-      calcs_graph(node.right)
-      unless node.left || node.right
-        @count_down += 1
-      end
-    end
-  end
-  
+
   # Высота Идеал дерева
   def height_ideal_r(node)
     if node
