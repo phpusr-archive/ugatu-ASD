@@ -62,6 +62,13 @@ class Node {
 }
 
 /**
+ * Сгенерировать 25 3-х значных неповторяющихся элементов<br/>
+ * Вывести их на экран<br/>
+ * Представить в виде идельно-сбалансированного дерева<br/>
+ * Вывести элементы дерева в обратном порядке<br/>
+ */
+
+/**
  * Дерево
  */
 public class Tree {
@@ -71,7 +78,10 @@ public class Tree {
     private String empty;
     /** Корень дерева */
     private Node root;
-
+    /** TODO */
+    private int height;
+    /** TODO */
+    private List<String> graph;
 
 
     /**
@@ -80,6 +90,9 @@ public class Tree {
      * если нет, то сгенерирутся список из array элментов)
      */
     public Tree(List<Integer> array, boolean ideal, String indent, String empty) {
+        this.indent = indent;
+        this.empty = empty;
+
         if (array.size() == 1) {
             array = generateRandomArray(array.get(0));
         }
@@ -122,9 +135,9 @@ public class Tree {
             }
             node.setLeft(buildIdealR(array, new Node(), size/2));
             node.setRight(buildIdealR(array, new Node(), size-size/2-1));
+            return node;
         }
-
-        return node;
+        return null;
     }
 
     /** Текстовый вывод дерева */
@@ -175,15 +188,95 @@ public class Tree {
         System.out.println();
     }
 
+    /** Вывод Дерева Графически */
+    public void printGraphicalTree() {
+        System.out.println(">> Print Graphical Tree");
+        height = getHeight();
+        graph = new ArrayList<String>();
+
+        for (int i = 0; i < height; i++) {
+            graph.add("");
+        }
+
+        System.out.println("Height: " + height);
+
+        generateGraphicalTreeR(root, 1);
+
+        // Вывод Дерева
+        for (String row : graph) {
+            System.out.println(row);
+        }
+
+    }
+
+    /** Генерация Графического представления Дерева Рекурсивно */
+    private void generateGraphicalTreeR(Node node, int lvl) {
+        if (lvl == 1) {
+            generateGraphicalNode(node, lvl);
+        } else if (lvl <= height) {
+            Node tmpNode = node != null ? node.getLeft() : null;
+            generateGraphicalNode(tmpNode, lvl);
+
+            tmpNode = node != null ? node.getRight() : null;
+            generateGraphicalNode(tmpNode, lvl);
+        }
+    }
+
+    /** Генерация графического представления для ветки */
+    private void generateGraphicalNode(Node node, int lvl) {
+        printIndent(lvl, false);
+        if (node != null) {
+            graph.set(lvl-1, graph.get(lvl-1) + node.getData());
+        } else {
+            graph.set(lvl-1, graph.get(lvl-1) + empty);
+        }
+        printIndent(lvl, true);
+
+        generateGraphicalTreeR(node, lvl+1);
+    }
+
+    /** Вывод Отступа справа и слева */
+    private void printIndent(int lvl, boolean right) {
+        int count = (int)Math.pow(2, height-lvl)-1;
+        if (right) count++;
+        for (int i = 0; i < count; i++) {
+            graph.set(lvl-1, graph.get(lvl-1) + indent);
+        }
+    }
+
+    /** Высота Дерева */
+    private int getHeight() {
+        List<Integer> heights = new ArrayList<Integer>();
+        getHeightR(root, 1, heights);
+
+        int max = 0;
+        for (Integer h : heights) {
+            if (h > max) max = h;
+        }
+
+        return max;
+    }
+
+    /** Высота Дерева рекурсивно */
+    private void getHeightR(Node node, int lvl, List<Integer> heights) {
+        if (node != null) {
+            getHeightR(node.getLeft(), lvl+1, heights);
+            getHeightR(node.getRight(), lvl+1, heights);
+        } else {
+            heights.add(lvl-1);
+        }
+    }
+
     /** Главная функция */
     public static void main(String[] args) {
         //Массив для проверки
         List<Integer> array = new LinkedList<Integer>(Arrays.asList(69, 85, 73, 54, 12, 23, 47));
-        List<Integer> size = Arrays.asList(5);
+        List<Integer> size = Arrays.asList(25);
 
         //TODO Создаем класс Hash: 45 - кол-во элементов, false - выкл-е отладки, null - массив пустой
-        Tree tree = new Tree(array, false, "...", "xxx");
+        Tree tree = new Tree(size, true, "..", "xx");
         tree.printTree();
+        tree.printGraphicalTree();
     }
 }
 
