@@ -8,6 +8,7 @@
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -76,8 +77,13 @@ public class Tree {
      * (если array список, то создастся дерево из него,
      * если нет, то сгенерирутся список из array элментов)
      */
-    public Tree(int size, boolean ideal, String indent, String empty) {
-        List<Integer> array = generateRandomArray(size);
+    public Tree(List<Integer> array, boolean ideal, String indent, String empty) {
+        if (array.size() == 1) {
+            array = generateRandomArray(array.get(0));
+        }
+
+        //Вывод Рандомного массива
+        printRandomArray(array);
 
         if (ideal) {
             System.out.println(">> Build Ideal Tree");
@@ -129,9 +135,6 @@ public class Tree {
             array.add(getRandUniq(array));
         }
 
-        //Вывод Рандомного массива
-        printRandomArray(array);
-
         return array;
     }
 
@@ -160,13 +163,12 @@ public class Tree {
     /** Главная функция */
     public static void main(String[] args) {
         //Массив для проверки
-        List<Integer> array = Arrays.asList(69, 85, 73, 54, 12, 23, 47); //TODO
+        List<Integer> array = new LinkedList<Integer>(Arrays.asList(69, 85, 73, 54, 12, 23, 47));
+        List<Integer> size = Arrays.asList(5);
 
         //TODO Создаем класс Hash: 45 - кол-во элементов, false - выкл-е отладки, null - массив пустой
-        Tree tree = new Tree(5, true, "...", "xxx");
+        Tree tree = new Tree(array, true, "...", "xxx");
         tree.printTree();
-
-
     }
 }
 
