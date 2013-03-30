@@ -11,56 +11,6 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Узел
- */
-class Node {
-    private Integer data;
-    private Node left;
-    private Node right;
-
-    Node() {}
-
-    Node(Integer data) {
-        this.data = data;
-    }
-
-    public Integer getData() {
-        return data;
-    }
-
-    public void setData(Integer data) {
-        this.data = data;
-    }
-
-    public Node getLeft() {
-        return left;
-    }
-
-    public void setLeft(Node left) {
-        this.left = left;
-    }
-
-    public Node getRight() {
-        return right;
-    }
-
-    public void setRight(Node right) {
-        this.right = right;
-    }
-
-    @Override
-    public String toString() {
-        String tmp = "N: " + data;
-        tmp += ";\t L: ";
-        tmp += left != null ? left.data : "null";
-        tmp += ";\t\t R: ";
-        tmp += right != null ? right.data : "null";
-
-        return tmp;
-    }
-}
-
 /** TODO
  * Сгенерировать 25 3-х значных неповторяющихся элементов<br/>
  * Вывести их на экран<br/>
