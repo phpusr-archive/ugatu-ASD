@@ -12,14 +12,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 /** TODO
+ * Дерево<br/>
  * Сгенерировать 25 3-х значных неповторяющихся элементов<br/>
  * Вывести их на экран<br/>
  * Представить в виде идельно-сбалансированного дерева<br/>
  * Вывести элементы дерева в обратном порядке<br/>
- */
-
-/**
- * Дерево
  */
 public class Tree {
     /** Отступ слева и справа */
@@ -139,6 +136,28 @@ public class Tree {
         }
     }
 
+    /** Вывод дерева в Обратном порядке TODO*/
+    public void printBack() {
+        System.out.println(">> Print Back Tree");
+        List<Integer> backArray = new ArrayList<Integer>();
+        printBackR(root, backArray);
+
+        for (Integer el : backArray) {
+            System.out.print(el + ", ");
+        }
+        System.out.println();
+    }
+
+    /** Рекурсивный Обратный вывод элементов TODO*/
+    private void printBackR(Node node, List<Integer> backArray) {
+        if (node != null) {
+            printBackR(node.getLeft(), backArray);
+            printBackR(node.getRight(), backArray);
+            backArray.add(node.getData());
+        }
+    }
+
+
     /** Вывод Дерева Графически */
     public void printGraphicalTree() {
         System.out.println(">> Print Graphical Tree");
@@ -157,7 +176,7 @@ public class Tree {
         for (String row : graph) {
             System.out.println(row);
         }
-
+        System.out.println();
     }
 
     /** Генерация Графического представления Дерева Рекурсивно */
@@ -225,9 +244,10 @@ public class Tree {
         List<Integer> size = Arrays.asList(25);
 
         //TODO Создаем класс Tree: size - кол-во элементов, true - идеально сбал. дер-во, ".." - разделитель, "xx" - пустые узлы
-        Tree tree = new Tree(size, true, "..", "xx");
+        Tree tree = new Tree(array, true, "..", "xx");
         tree.printTree();
         tree.printGraphicalTree();
+        tree.printBack();
     }
 }
 
