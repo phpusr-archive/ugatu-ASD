@@ -168,7 +168,7 @@ public class Tree {
             graph.add("");
         }
 
-        System.out.println("Height: " + height);
+        System.out.println("Height: " + height + "\n");
 
         generateGraphicalTreeR(root, 1);
 
@@ -241,10 +241,10 @@ public class Tree {
     public static void main(String[] args) {
         //Массив для проверки
         List<Integer> array = new LinkedList<Integer>(Arrays.asList(69, 85, 73, 54, 12, 23, 47));
-        List<Integer> size = Arrays.asList(25);
+        List<Integer> size = Arrays.asList(15);
 
         //TODO Создаем класс Tree: size - кол-во элементов, true - идеально сбал. дер-во, ".." - разделитель, "xx" - пустые узлы
-        Tree tree = new Tree(array, true, "..", "xx");
+        Tree tree = new Tree(size, false, "..", "xx");
         tree.printTree();
         tree.printGraphicalTree();
         tree.printBack();
