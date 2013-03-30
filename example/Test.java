@@ -28,5 +28,9 @@ public class Test {
 
         System.out.println(hashMap.keySet());
         System.out.println(hashMap.toString());
+
+
+        String tmp = "test: " + null + ";";
+        System.out.println(tmp);
     }
 }
