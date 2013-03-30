@@ -55,7 +55,7 @@ class Tree
   
   # Вывод Дерева Графически
   def print_graphical_tree
-    puts '>> Print Graph Tree'
+    puts '>> Print Graphical Tree'
     @height = get_height
     @graph = Array.new(@height)
 
@@ -75,7 +75,7 @@ class Tree
     heights.max-1
   end
 
-  # Вывод дерева в обратном порядке
+  # Вывод дерева в Обратном порядке
   def print_back
     puts '>> Print Back Tree'
     back_array = []
@@ -135,12 +135,12 @@ class Tree
     end
   end
 
-  # Рекурсивный Обратный вывод элементов в Поисковом дереве
+  # Рекурсивный Обратный вывод элементов
   def print_back_r(node, back_array)
     unless node.nil?      
       print_back_r(node.left, back_array)
       print_back_r(node.right, back_array)
-	    back_array << node.data
+	  back_array << node.data
     end
   end
 
