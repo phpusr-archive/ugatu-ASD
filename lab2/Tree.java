@@ -61,7 +61,7 @@ class Node {
     }
 }
 
-/**
+/** TODO
  * Сгенерировать 25 3-х значных неповторяющихся элементов<br/>
  * Вывести их на экран<br/>
  * Представить в виде идельно-сбалансированного дерева<br/>
@@ -74,20 +74,21 @@ class Node {
 public class Tree {
     /** Отступ слева и справа */
     private String indent;
-    /** TODO */
+    /** Пустые Узлы */
     private String empty;
     /** Корень дерева */
     private Node root;
-    /** TODO */
+    /** Высота дерева */
     private int height;
-    /** TODO */
+    /** Список строк графического Дерева */
     private List<String> graph;
 
+    //TODO добавить комментарии к функциям, проверить все TODO
 
     /**
      * Конструктор
-     * (если array список, то создастся дерево из него,
-     * если нет, то сгенерирутся список из array элментов)
+     * (если в array несколько элементов, то создастся дерево из него,
+     * если нет, то сгенерирутся список из кол-во равного array[0] элементов)
      */
     public Tree(List<Integer> array, boolean ideal, String indent, String empty) {
         this.indent = indent;
@@ -140,22 +141,6 @@ public class Tree {
         return null;
     }
 
-    /** Текстовый вывод дерева */
-    public void printTree() {
-        System.out.println(">> Print Tree");
-        printR(root);
-        System.out.println();
-    }
-
-    /** Рекурсивный вывод элементов в Поисковом дереве */
-    private void printR(Node node) {
-        if (node != null && node.getData() != null) {
-            System.out.println(node);
-            printR(node.getLeft());
-            printR(node.getRight());
-        }
-    }
-
     /** Рандомная генерация массива */
     private List<Integer> generateRandomArray(int size) {
         List<Integer> array = new ArrayList<Integer>();
@@ -186,6 +171,22 @@ public class Tree {
             System.out.print(el + ", ");
         }
         System.out.println();
+    }
+
+    /** Текстовый вывод дерева */
+    public void printTree() {
+        System.out.println(">> Print Tree");
+        printR(root);
+        System.out.println();
+    }
+
+    /** Рекурсивный вывод элементов в Поисковом дереве */
+    private void printR(Node node) {
+        if (node != null && node.getData() != null) {
+            System.out.println(node);
+            printR(node.getLeft());
+            printR(node.getRight());
+        }
     }
 
     /** Вывод Дерева Графически */
@@ -273,7 +274,7 @@ public class Tree {
         List<Integer> array = new LinkedList<Integer>(Arrays.asList(69, 85, 73, 54, 12, 23, 47));
         List<Integer> size = Arrays.asList(25);
 
-        //TODO Создаем класс Hash: 45 - кол-во элементов, false - выкл-е отладки, null - массив пустой
+        //TODO Создаем класс Tree: size - кол-во элементов, true - идеально сбал. дер-во, ".." - разделитель, "xx" - пустые узлы
         Tree tree = new Tree(size, true, "..", "xx");
         tree.printTree();
         tree.printGraphicalTree();
