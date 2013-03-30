@@ -52,8 +52,10 @@ class Node {
     @Override
     public String toString() {
         String tmp = "N: " + data;
-        if (left != null) tmp += ";\t L: " + left.data;
-        if (right != null) tmp += ";\t R: " + right.data;
+        tmp += ";\t L: ";
+        tmp += left != null ? left.data : "null";
+        tmp += ";\t\t R: ";
+        tmp += right != null ? right.data : "null";
 
         return tmp;
     }
@@ -93,9 +95,22 @@ public class Tree {
             root = new Node(array.get(0));
             array.remove(0);
             for (Integer el : array) {
-                //addR(el, root); //TODO
+                addR(el, root);
             }
         }
+    }
+
+    /** Рекурсивное добавление элемента в Поисковое дерево */
+    private Node addR(int el, Node node) {
+        if (node == null) {
+            node = new Node(el);
+        } else if (el > node.getData()) {
+            node.setRight(addR(el, node.getRight()));
+        } else {
+            node.setLeft(addR(el, node.getLeft()));
+        }
+
+        return node;
     }
 
     /** Рекурсивное построение Идеально-сбалансированного дерева */
@@ -167,7 +182,7 @@ public class Tree {
         List<Integer> size = Arrays.asList(5);
 
         //TODO Создаем класс Hash: 45 - кол-во элементов, false - выкл-е отладки, null - массив пустой
-        Tree tree = new Tree(array, true, "...", "xxx");
+        Tree tree = new Tree(array, false, "...", "xxx");
         tree.printTree();
     }
 }
