@@ -51,8 +51,10 @@ class Hash
   def put_el(el, value, type)
     if value == 0
       index = func(el)
+      puts "#{el}->#{index}"
     else
       index = type == :linear ? (func(el)+value) % @tmp.size : (func(el)+value**2) % @tmp.size
+      puts "\t#{value}->#{index}"
     end
 
     if @tmp[index] == nil then
@@ -76,6 +78,7 @@ class Hash
 
   # Вывод временного массива
   def print_tmp(wrap)
+    puts
     @tmp.each_with_index { |el, index|
       print "#{index}->#{el}"
       print ', ' if index < @tmp.size-1
