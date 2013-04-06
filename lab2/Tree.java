@@ -11,12 +11,12 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-/** TODO
+/**
  * Дерево<br/>
- * Сгенерировать 25 3-х значных неповторяющихся элементов<br/>
+ * Сгенерировать 23, 2-х значных неповторяющихся чисел<br/>
  * Вывести их на экран<br/>
- * Представить в виде идельно-сбалансированного дерева<br/>
- * Вывести элементы дерева в обратном порядке<br/>
+ * Представить в виде поискового дерева<br/>
+ * Вывести элементы дерева в симметричном порядке<br/>
  */
 public class Tree {
     /** Отступ слева и справа */
@@ -37,7 +37,7 @@ public class Tree {
      * (если в array несколько элементов, то создастся дерево из него,
      * если нет, то сгенерирутся список из кол-во равного array[0] элементов)
      */
-    public Tree(List<Integer> array, boolean ideal, String indent, String empty) {
+    public Tree(List<Integer> array, String indent, String empty) {
         this.indent = indent;
         this.empty = empty;
 
@@ -48,17 +48,13 @@ public class Tree {
         //Вывод Рандомного массива
         printRandomArray(array);
 
-        if (ideal) {
-            System.out.println(">> Build Ideal Tree");
-            root = buildIdealR(array, new Node(), array.size());
-        } else {
-            System.out.println(">> Build Search Tree");
-            root = new Node(array.get(0));
-            array.remove(0);
-            for (Integer el : array) {
-                addR(el, root);
-            }
+        System.out.println(">> Build Search Tree");
+        root = new Node(array.get(0));
+        array.remove(0);
+        for (Integer el : array) {
+            addR(el, root);
         }
+
     }
 
     /** Рекурсивное добавление элемента в Поисковое дерево */
@@ -72,20 +68,6 @@ public class Tree {
         }
 
         return node;
-    }
-
-    /** Рекурсивное построение Идеально-сбалансированного дерева */
-    private Node buildIdealR(List<Integer> array, Node node, int size) {
-        if (size != 0) {
-            if (node.getData() == null) {
-                node.setData(array.get(0));
-                array.remove(0);
-            }
-            node.setLeft(buildIdealR(array, new Node(), size/2));
-            node.setRight(buildIdealR(array, new Node(), size-size/2-1));
-            return node;
-        }
-        return null;
     }
 
     /** Рандомная генерация массива */
@@ -136,11 +118,11 @@ public class Tree {
         }
     }
 
-    /** Вывод дерева в Обратном порядке TODO*/
-    public void printBack() {
+    /** Вывод дерева в Симметричном порядке */
+    public void printSimmetr() {
         System.out.println(">> Print Back Tree");
         List<Integer> backArray = new ArrayList<Integer>();
-        printBackR(root, backArray);
+        printSimmetrR(root, backArray);
 
         for (Integer el : backArray) {
             System.out.print(el + ", ");
@@ -148,12 +130,12 @@ public class Tree {
         System.out.println();
     }
 
-    /** Рекурсивный Обратный вывод элементов TODO*/
-    private void printBackR(Node node, List<Integer> backArray) {
+    /** Рекурсивный Симметричный вывод элементов */
+    private void printSimmetrR(Node node, List<Integer> backArray) {
         if (node != null) {
-            printBackR(node.getLeft(), backArray);
-            printBackR(node.getRight(), backArray);
+            printSimmetrR(node.getLeft(), backArray);
             backArray.add(node.getData());
+            printSimmetrR(node.getRight(), backArray);
         }
     }
 
@@ -241,13 +223,14 @@ public class Tree {
     public static void main(String[] args) {
         //Массив для проверки
         List<Integer> array = new LinkedList<Integer>(Arrays.asList(69, 85, 73, 54, 12, 23, 47));
-        List<Integer> size = Arrays.asList(15);
+        //Кол-во рандомных элементов
+        List<Integer> size = Arrays.asList(23);
 
-        //TODO Создаем класс Tree: size - кол-во элементов, true - идеально сбал. дер-во, ".." - разделитель, "xx" - пустые узлы
-        Tree tree = new Tree(size, false, "..", "xx");
+        //TODO Создаем класс Tree: size - кол-во элементов, ".." - разделитель, "xx" - пустые узлы
+        Tree tree = new Tree(size, "..", "xx");
         tree.printTree();
         tree.printGraphicalTree();
-        tree.printBack();
+        tree.printSimmetr();
     }
 }
 
