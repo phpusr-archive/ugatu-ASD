@@ -30,8 +30,6 @@ public class Tree {
     /** Список строк графического Дерева */
     private List<String> graph;
 
-    //TODO добавить комментарии к функциям, проверить все TODO
-
     /**
      * Конструктор
      * (если в array несколько элементов, то создастся дерево из него,
@@ -41,33 +39,34 @@ public class Tree {
         this.indent = indent;
         this.empty = empty;
 
-        if (array.size() == 1) {
-            array = generateRandomArray(array.get(0));
+        if (array.size() == 1) { //Если размер списка: array = 1
+            array = generateRandomArray(array.get(0)); //Генерируем посл-ть элементов, кол-во берется из array[0]
         }
 
-        //Вывод Рандомного массива
-        printRandomArray(array);
+        //Вывод массива
+        printArray(array);
 
+        //Создание поискового дерева
         System.out.println(">> Build Search Tree");
-        root = new Node(array.get(0));
+        root = new Node(array.get(0)); //Корнем дерева, назначается первый элемент из списка: array
         array.remove(0);
         for (Integer el : array) {
-            addR(el, root);
+            addR(el, root); //В цикле передаем все элементы списка: array, в ф-ю addR()
         }
 
     }
 
     /** Рекурсивное добавление элемента в Поисковое дерево */
     private Node addR(int el, Node node) {
-        if (node == null) {
-            node = new Node(el);
-        } else if (el > node.getData()) {
-            node.setRight(addR(el, node.getRight()));
-        } else {
-            node.setLeft(addR(el, node.getLeft()));
+        if (node == null) { //Если узел = null
+            node = new Node(el); //Создаем новый узел, знач-е узла берем из el
+        } else if (el > node.getData()) { //Если el > текущего узла
+            node.setRight(addR(el, node.getRight())); //Передаем его в правое поддерево
+        } else { //Если el <= текущего узла
+            node.setLeft(addR(el, node.getLeft())); //Передаем его в левое поддерево
         }
 
-        return node;
+        return node; //Ф-я возвращает текущий узел
     }
 
     /** Рандомная генерация массива */
@@ -93,8 +92,8 @@ public class Tree {
         }
     }
 
-    /** Вывод рандомного массива */
-    private void printRandomArray(List<Integer> array) {
+    /** Вывод массива */
+    private void printArray(List<Integer> array) {
         System.out.println("Random array (size: " + array.size() + "):");
         for(Integer el : array) {
             System.out.print(el + ", ");
@@ -121,10 +120,11 @@ public class Tree {
     /** Вывод дерева в Симметричном порядке */
     public void printSimmetr() {
         System.out.println(">> Print Back Tree");
-        List<Integer> backArray = new ArrayList<Integer>();
-        printSimmetrR(root, backArray);
+        List<Integer> simmetrArray = new ArrayList<Integer>(); //Создаем список, который будет содержать эл-ты дерева в симметр. порядке
+        printSimmetrR(root, simmetrArray); //Добавляем в simmetrArray элементы дерева в симметр. порядке
 
-        for (Integer el : backArray) {
+        //Выводим дерево в симметричном порядке
+        for (Integer el : simmetrArray) {
             System.out.print(el + ", ");
         }
         System.out.println();
@@ -133,9 +133,9 @@ public class Tree {
     /** Рекурсивный Симметричный вывод элементов */
     private void printSimmetrR(Node node, List<Integer> backArray) {
         if (node != null) {
-            printSimmetrR(node.getLeft(), backArray);
-            backArray.add(node.getData());
-            printSimmetrR(node.getRight(), backArray);
+            printSimmetrR(node.getLeft(), backArray); //Запускаем ф-ю для левого поддерева
+            backArray.add(node.getData()); //Добавляем узел в backArray
+            printSimmetrR(node.getRight(), backArray); //Запускаем ф-ю для правого поддерева
         }
     }
 
@@ -143,16 +143,16 @@ public class Tree {
     /** Вывод Дерева Графически */
     public void printGraphicalTree() {
         System.out.println(">> Print Graphical Tree");
-        height = getHeight();
-        graph = new ArrayList<String>();
+        height = getHeight(); //Получаем max высоту дерева
+        graph = new ArrayList<String>(); //Создаем список, который будет содержать графическое представление дерева
 
-        for (int i = 0; i < height; i++) {
+        for (int i = 0; i < height; i++) { //Добавляем height раз пустых строк в graph
             graph.add("");
         }
 
         System.out.println("Height: " + height + "\n");
 
-        generateGraphicalTreeR(root, 1);
+        generateGraphicalTreeR(root, 1); //Запускаем ф-ю графического представления дерева
 
         // Вывод Дерева
         for (String row : graph) {
@@ -163,28 +163,28 @@ public class Tree {
 
     /** Генерация Графического представления Дерева Рекурсивно */
     private void generateGraphicalTreeR(Node node, int lvl) {
-        if (lvl == 1) {
-            generateGraphicalNode(node, lvl);
-        } else if (lvl <= height) {
+        if (lvl == 1) { //Если уровень в дереве = 1
+            generateGraphicalNode(node, lvl); //Генерируем графич. представление для ветки node
+        } else if (lvl <= height) { //Если уровень <= height
             Node tmpNode = node != null ? node.getLeft() : null;
-            generateGraphicalNode(tmpNode, lvl);
+            generateGraphicalNode(tmpNode, lvl); //Генерируем графич. предсавление для левой ветки, если она не равна null
 
             tmpNode = node != null ? node.getRight() : null;
-            generateGraphicalNode(tmpNode, lvl);
+            generateGraphicalNode(tmpNode, lvl); //Генерируем графич. предсавление для правой ветки, если она не равна null
         }
     }
 
     /** Генерация графического представления для ветки */
     private void generateGraphicalNode(Node node, int lvl) {
-        printIndent(lvl, false);
-        if (node != null) {
-            graph.set(lvl-1, graph.get(lvl-1) + node.getData());
-        } else {
-            graph.set(lvl-1, graph.get(lvl-1) + empty);
+        printIndent(lvl, false); //Выводим отступы слева от узла
+        if (node != null) { //Если узел не равен null
+            graph.set(lvl-1, graph.get(lvl-1) + node.getData()); //Добавляем к уровню lvl узел
+        } else { //Если узел равен null
+            graph.set(lvl-1, graph.get(lvl-1) + empty); //Добавляем строку empty
         }
-        printIndent(lvl, true);
+        printIndent(lvl, true); //Выводим отступы справа от узла
 
-        generateGraphicalTreeR(node, lvl+1);
+        generateGraphicalTreeR(node, lvl+1); //Генерируем графич. предсавление для текущего узла
     }
 
     /** Вывод Отступа справа и слева */
@@ -226,10 +226,17 @@ public class Tree {
         //Кол-во рандомных элементов
         List<Integer> size = Arrays.asList(23);
 
-        //TODO Создаем класс Tree: size - кол-во элементов, ".." - разделитель, "xx" - пустые узлы
-        Tree tree = new Tree(size, "..", "xx");
-        tree.printTree();
+        //Создаем класс Tree: size - кол-во элементов, ".." - разделитель, "xx" - пустые узлы
+        //Создаем поисковое дерево
+        Tree tree = new Tree(size, "--", "||");
+
+        //Вывод текстового представления дерева
+        //tree.printTree();
+
+        //Вывод графического представления дерева
         tree.printGraphicalTree();
+
+        //Вывод дерева в Симметричном порядке
         tree.printSimmetr();
     }
 }
