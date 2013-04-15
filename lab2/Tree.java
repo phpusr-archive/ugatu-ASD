@@ -119,7 +119,7 @@ public class Tree {
 
     /** Вывод дерева в Симметричном порядке */
     public void printSimmetr() {
-        System.out.println(">> Print Back Tree");
+        System.out.println(">> Print Simmetr Tree");
         List<Integer> simmetrArray = new ArrayList<Integer>(); //Создаем список, который будет содержать эл-ты дерева в симметр. порядке
         printSimmetrR(root, simmetrArray); //Добавляем в simmetrArray элементы дерева в симметр. порядке
 
@@ -161,7 +161,13 @@ public class Tree {
         System.out.println();
     }
 
-    /** Генерация Графического представления Дерева Рекурсивно */
+    /**
+     * Генерация Графического представления Дерева Рекурсивно
+     * Перед выводом дерево создается в памяти в виде массива
+     * Сначало левые ветви, потом правые
+     * Только после полного создания дерева в памяти,
+     * оно начинает выводиться по строчно
+     */
     private void generateGraphicalTreeR(Node node, int lvl) {
         if (lvl == 1) { //Если уровень в дереве = 1
             generateGraphicalNode(node, lvl); //Генерируем графич. представление для ветки node
